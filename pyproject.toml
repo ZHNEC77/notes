@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "notes"
+version = "0.1.0"
+description = ""
+authors = ["ZHNEC77 <vadim030714@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+uvicorn = {extras = ["standard"], version = "^0.30.6"}
+fastapi = "^0.112.2"
+black = "^24.8.0"
+pydantic = {extras = ["email"], version = "^2.8.2"}
+pydantic-settings = "^2.4.0"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.32"}
+asyncpg = "^0.29.0"
+alembic = "^1.13.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
