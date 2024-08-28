@@ -13,6 +13,7 @@ class ApiV1Prefix(BaseModel):
     users: str = "/users"
     auth: str = "/auth"
     messages: str = "/messages"
+    notes: str = "/notes"
 
 
 class ApiPrefix(BaseModel):
