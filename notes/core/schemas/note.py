@@ -1,6 +1,14 @@
+import os
+import requests
 from typing import Optional
 from pydantic import BaseModel, field_validator
-from speller.speller import checker
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+
+URL = os.getenv("URL")
 
 
 class NoteRead(BaseModel):
@@ -14,14 +22,20 @@ class NoteCreate(BaseModel):
     body: str
     # user_id: int
 
-    # @field_validator("body")
-    # @classmethod
-    # def validate_body(cls, value: str):
-    #     check = checker(value)
-    #     if check is False:
-    #         return value
-    #     else:
-    #         return check
+    @field_validator("body")
+    @classmethod
+    def validate_body(cls, value: str):
+        params = {"text": "синхрафазатрон+" + value}
+        response = requests.get(URL, params=params)
+        res = response.json()
+        erros = []
+        for i in range(1, len(res)):
+            e = res[i]["s"][0]
+            print(e)
+            erros.append(e)
+        if erros:
+            raise ValueError("ошибка в слове правильно: ", " ".join(erros))
+        return value
 
 
 class NoteUpdate(BaseModel):
