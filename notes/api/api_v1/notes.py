@@ -44,7 +44,7 @@ async def read_all_notes(
     session: AsyncSession = Depends(db_helper.session_getter)
 ):
     notes = await get_all_notes(
-        session=db_helper.session_getter(),
+        session=session,
         user_id=user.id,
     )
     return notes

@@ -2,9 +2,8 @@ from typing import Sequence
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 from core.models import Note
-from core.schemas.note import NoteCreate
 
 
 async def post(
@@ -26,5 +25,8 @@ async def get_all_notes(
     stmt = select(Note).options(
         selectinload(Note.user)
     ).filter(Note.user_id == user_id).order_by(Note.id)
+    stmt = select(Note).options(
+        joinedload(Note.user)).filter(
+        user_id == user_id).order_by(Note.title)
     result = await session.scalars(stmt)
     return result.all()

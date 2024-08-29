@@ -8,12 +8,12 @@ def checker(text: str):
     reaponse = requests.get(URL, params=params)
     print(reaponse)
     res = reaponse.json()
-    # print(res)
+    print(res)
     erros = []
     try:
         for i in range(len(res)):
             e = res[i]["s"][0]
-            # print(e)
+            print(e)
             erros.append(e)
         return erros
     except:
