@@ -16,11 +16,12 @@ class NoteCreate(BaseModel):
 
     @field_validator("body")
     @classmethod
-    def validate_body(cls, value: str) -> str:
-        if not checker(value):
+    def validate_body(cls, value: str):
+        check = checker(value)
+        if check is False:
             return value
         else:
-            return checker(value)
+            return check
 
 
 class NoteUpdate(BaseModel):
