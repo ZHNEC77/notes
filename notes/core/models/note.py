@@ -3,6 +3,7 @@ from sqlalchemy import String, Text, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from .base import Base
 from .mixins.int_id_pk import IntIdPkMixin
+from sqlalchemy.ext.asyncio import AsyncSession
 
 if TYPE_CHECKING:
     from .user import User

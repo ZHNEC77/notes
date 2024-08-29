@@ -1,6 +1,7 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from core.models import User
 
@@ -24,11 +25,17 @@ async def get_user_notes(
         Depends(current_user)
     ],
     note_create: NoteCreate,
+    session: AsyncSession = Depends(db_helper.session_getter),
 ):
-    return await post(note_create=note_create, user_id=user.id, session=db_helper.session_getter())
+    return await post(
+        session=session,
+        user_id=user.id,
+        body=note_create.title,
+        title=note_create.body,
+    )
 
 
-@router.get("/")
+@ router.get("/")
 async def read_all_notes(
     user: Annotated[
         User,

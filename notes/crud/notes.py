@@ -7,6 +7,18 @@ from core.models import Note
 from core.schemas.note import NoteCreate
 
 
+async def post(
+        session: AsyncSession,
+        user_id: int,
+        title: str,
+        body: str,
+):
+    note = Note(title=title, body=body, user_id=user_id)
+    session.add(note)
+    await session.commit()
+    return note
+
+
 async def get_all_notes(
     session: AsyncSession,
     user_id: int,
@@ -16,14 +28,3 @@ async def get_all_notes(
     ).filter(Note.user_id == user_id).order_by(Note.id)
     result = await session.scalars(stmt)
     return result.all()
-
-
-async def post(
-    session: AsyncSession,
-    note_create: NoteCreate,
-    user_id: int,
-) -> Sequence[Note]:
-    note = Note(**note_create.model_dump(), user_id=user_id)
-    session.add(note)
-    await session.commit()
-    return note
