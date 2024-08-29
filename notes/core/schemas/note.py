@@ -14,13 +14,13 @@ class NoteCreate(BaseModel):
     body: str
     # user_id: int
 
-    # @field_validator("body")
-    # @classmethod
-    # def validate_body(cls, value: str) -> str:
-    #     if not checker(value):
-    #         return value
-    #     else:
-    #         return checker(value)
+    @field_validator("body")
+    @classmethod
+    def validate_body(cls, value: str) -> str:
+        if not checker(value):
+            return value
+        else:
+            return checker(value)
 
 
 class NoteUpdate(BaseModel):
