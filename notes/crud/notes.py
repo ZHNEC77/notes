@@ -23,9 +23,6 @@ async def get_all_notes(
     user_id: int,
 ) -> Sequence[Note]:
     stmt = select(Note).options(
-        selectinload(Note.user)
-    ).filter(Note.user_id == user_id).order_by(Note.id)
-    stmt = select(Note).options(
         joinedload(Note.user)).filter(
         user_id == user_id).order_by(Note.title)
     result = await session.scalars(stmt)
