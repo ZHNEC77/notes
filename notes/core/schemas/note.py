@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, validator, field_validator
+from pydantic import BaseModel, field_validator
 from speller.speller import checker
 
 
@@ -14,12 +14,13 @@ class NoteCreate(BaseModel):
     body: str
     # user_id: int
 
-    # @validator("body")
-    # def validate_body(cls, value):
-    #     if not checker(value):
-    #         return value
-    #     else:
-    #         return checker(value)
+    @field_validator("body")
+    @classmethod
+    def validate_body(cls, value: str) -> str:
+        if not checker(value):
+            return value
+        else:
+            return checker(value)
 
 
 class NoteUpdate(BaseModel):

@@ -35,12 +35,13 @@ async def get_user_notes(
     )
 
 
-@ router.get("/")
+@ router.get("/my_notes")
 async def read_all_notes(
     user: Annotated[
         User,
         Depends(current_user)
     ],
+    session: AsyncSession = Depends(db_helper.session_getter)
 ):
     notes = await get_all_notes(
         session=db_helper.session_getter(),
