@@ -9,7 +9,7 @@ RUN mkdir /web
 
 WORKDIR /web
 
-COPY poetry.lock pyproject.toml /web/
+COPY ../poetry.lock ../pyproject.toml /web/
 
 RUN pip install --upgrade pip && \
     pip install poetry && \
